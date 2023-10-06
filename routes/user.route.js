@@ -4,6 +4,38 @@ const {UserModel}= require("../model/user.model")
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
 const userRouter = express.Router()
+/**
+ * @swagger
+ * /users/register:
+ *   post:
+ *     summary: User Registration
+ *     description: Register a new user by providing name, email, and password.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *     responses:
+ *       201:
+ *         description: User successfully registered.
+ *       409:
+ *         description: User already exists. Please log in.
+ *       500:
+ *         description: Internal server error.
+ */
+
 userRouter.post("/register",async(req,res)=>{
     const {name,email,password} = req.body
     try {
@@ -25,6 +57,36 @@ userRouter.post("/register",async(req,res)=>{
         res.status(400).send({"msg":error.message})
     }
 })
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: User Login
+ *     description: Authenticate and log in an existing user by providing their email and password.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - email
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Login successful. Returns an access token.
+ *       400:
+ *         description: Password is incorrect or other client errors.
+ *       404:
+ *         description: Email does not exist.
+ *       500:
+ *         description: Internal server error.
+ */
 
 userRouter.post("/login",async(req,res)=>{
     const {email,password} = req.body

@@ -4,6 +4,35 @@ const {BorrowedBook} = require('../model/borrowedBook.model')
 const bookRoute = express.Router();
 
 // Creating a new book
+/**
+ * @swagger
+ * /book/book:
+ *   post:
+ *     summary: Add Book
+ *     description: Adds new books to the library
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ISBN:
+ *                 type: string
+ *               title:
+ *                 type: string
+ *               author:
+ *                 type: string
+ *               publishedYear:
+ *                 type: integer
+ *               quantity:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Book added successful. Returns book in json format
+ *       500:
+ *         description: Internal server error.
+ */
 bookRoute.post('/books', async (req, res) => {
   try {
     const { ISBN, title, author, publishedYear, quantity } = req.body;
